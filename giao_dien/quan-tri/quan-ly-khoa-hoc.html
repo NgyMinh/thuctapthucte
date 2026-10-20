@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Khóa học & Bài học - FPT Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Header Navbar Quản Trị -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 bg-[#F37021] text-white font-black text-xl rounded">FPT</span>
+                    <span class="text-xl font-bold text-[#002C6C]">Software</span>
+                </a>
+            </div>
+
+            <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Tổng quan</a>
+                <a href="/giao-dien/quan-tri/quan-ly-khoa-hoc.html" class="px-3 py-2 text-[#F37021] bg-orange-50 rounded-lg font-bold">Khóa học & Bài học</a>
+                <a href="/giao-dien/quan-tri/quan-ly-cau-hoi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Ngân hàng câu hỏi</a>
+                <a href="/giao-dien/quan-tri/quan-ly-de-thi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Đề thi & Trộn đề</a>
+                <a href="/giao-dien/quan-tri/thong-ke-ket-qua.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Bảng điểm & Thống kê</a>
+                <a href="/giao-dien/quan-tri/quan-ly-thuc-tap-sinh.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Thực tập sinh</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/ho-so.html" class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm" id="avatar-chu-cai">M</a>
+                <button onclick="dangXuatHeThong()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900">Quản lý Khóa học & Bài học Đào tạo</h1>
+                <p class="text-sm text-slate-500 mt-1">Thiết lập chương trình đào tạo, biên soạn bài giảng đa phương tiện (Video/Slide/PDF) và phân công học viên.</p>
+            </div>
+            <div>
+                <button type="button" onclick="moModalThemKhoaHoc()"
+                    class="px-4 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-semibold rounded-xl shadow-sm transition inline-flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Thêm khóa học mới</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bảng danh sách khóa học (Table Layout với khoảng cách thoáng rộng) -->
+        <div class="the-card-fpt overflow-hidden bg-white border border-slate-200">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                        <tr>
+                            <th class="py-4 px-6">Mã khóa</th>
+                            <th class="py-4 px-6">Tên khóa học</th>
+                            <th class="py-4 px-6 text-center">Chương / Bài</th>
+                            <th class="py-4 px-6 text-center">Học viên tham gia</th>
+                            <th class="py-4 px-6 text-center">Trạng thái</th>
+                            <th class="py-4 px-6 text-right">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bang-khoa-hoc-body" class="divide-y divide-slate-100">
+                        <tr>
+                            <td colspan="6" class="py-12 text-center text-slate-400">Đang tải danh sách khóa học...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Thêm Khóa Học Mới -->
+    <div id="modal-khoa-hoc" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200">
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Thêm Khóa học Đào tạo mới</h3>
+            <p class="text-xs text-slate-500 mb-6">Nhập thông tin khóa học chuẩn khung đào tạo nội bộ FPT Software.</p>
+
+            <form id="form-khoa-hoc" onsubmit="xuLyLuuKhoaHoc(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Mã khóa học *</label>
+                    <input type="text" id="maKhoaHoc" required placeholder="Ví dụ: FPT-JV02, FPT-DEV01"
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Tên khóa học *</label>
+                    <input type="text" id="tieuDe" required placeholder="Tên chương trình đào tạo"
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Mô tả khóa học</label>
+                    <textarea id="moTa" rows="3" placeholder="Mục tiêu đầu ra và đối tượng đào tạo"
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Thời lượng (giờ)</label>
+                        <input type="number" id="thoiLuongGio" value="40" min="1"
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Đường dẫn ảnh bìa</label>
+                        <input type="url" id="anhKhoaHoc" placeholder="https://..."
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="dongModalKhoaHoc()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">Hủy bỏ</button>
+                    <button type="submit" class="px-5 py-2 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-bold rounded-xl shadow-sm transition">Lưu khóa học</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Quản lý Bài học & Chương thuộc khóa học -->
+    <div id="modal-bai-hoc" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                <div>
+                    <h3 class="text-base font-bold text-slate-900" id="modal-bai-hoc-tieu-de-khoa">Quản lý Bài học</h3>
+                    <p class="text-xs text-slate-500">Thêm chương và bài học chi tiết cho khóa đào tạo</p>
+                </div>
+                <button onclick="dongModalBaiHoc()" class="text-slate-400 hover:text-slate-600">✕</button>
+            </div>
+
+            <!-- Form Thêm Chương Mới -->
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl mb-6">
+                <h4 class="text-xs font-bold text-slate-700 mb-2">Thêm Chương mới:</h4>
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="tieuDeChuongMoi" placeholder="Ví dụ: Chương 1: Kiến thức nền tảng..."
+                        class="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#002C6C]/40">
+                    <button type="button" onclick="xuLyThemChuong()"
+                        class="px-4 py-2 bg-[#002C6C] hover:bg-blue-900 text-white text-xs font-bold rounded-lg transition">
+                        + Thêm chương
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Thêm Bài Học Mới -->
+            <div class="p-4 bg-orange-50/50 border border-orange-200 rounded-xl mb-6 space-y-3">
+                <h4 class="text-xs font-bold text-[#F37021]">Thêm Bài học mới vào chương:</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div>
+                        <label class="block text-slate-600 mb-1 font-medium">Chọn Chương:</label>
+                        <select id="chonChuong" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg"></select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-600 mb-1 font-medium">Loại bài học:</label>
+                        <select id="loaiBaiHoc" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg">
+                            <option value="video">Video bài giảng</option>
+                            <option value="tai_lieu_pdf">Tài liệu PDF</option>
+                            <option value="slide">Bài trình chiếu Slide</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-slate-600 mb-1 font-medium">Tiêu đề bài học:</label>
+                        <input type="text" id="tieuDeBaiHocMoi" placeholder="Tên bài học"
+                            class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-slate-600 mb-1 font-medium">Link nhúng Video hoặc Link PDF/Slide:</label>
+                        <input type="text" id="duongDanNoiDungMoi" placeholder="https://www.youtube.com/embed/... hoặc https://..."
+                            class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-slate-600 mb-1 font-medium">Tóm tắt & Hướng dẫn:</label>
+                        <textarea id="noiDungVanBanMoi" rows="2" placeholder="Ghi chú thêm cho bài học"
+                            class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg"></textarea>
+                    </div>
+                </div>
+                <div class="pt-2 text-right">
+                    <button type="button" onclick="xuLyThemBaiHoc()"
+                        class="px-5 py-2 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-bold rounded-lg shadow-sm transition">
+                        + Lưu bài học
+                    </button>
+                </div>
+            </div>
+
+            <!-- Danh sách các bài học hiện có trong khóa -->
+            <div>
+                <h4 class="text-xs font-bold text-slate-800 mb-3 uppercase tracking-wider">Cấu trúc bài học hiện tại:</h4>
+                <div id="danh-sach-bai-hien-tai" class="space-y-3 text-xs">
+                    <!-- Nạp động -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Phân Công Khóa Học Cho Thực Tập Sinh -->
+    <div id="modal-phan-cong" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200">
+            <h3 class="text-base font-bold text-slate-900 mb-1">Phân công Khóa học</h3>
+            <p class="text-xs text-slate-500 mb-5" id="phan-cong-ten-khoa">Chọn học viên để phân công</p>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <label class="block text-slate-700 font-semibold mb-1">Chọn thực tập sinh:</label>
+                    <select id="chonHocVien" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm"></select>
+                </div>
+                <div>
+                    <label class="block text-slate-700 font-semibold mb-1">Hạn hoàn thành (Tùy chọn):</label>
+                    <input type="date" id="hanHoanThanh" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm">
+                </div>
+            </div>
+
+            <div class="mt-6 flex items-center justify-end space-x-3">
+                <button type="button" onclick="dongModalPhanCong()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Hủy</button>
+                <button type="button" onclick="xuLyLuuPhanCong()" class="px-5 py-2 bg-[#002C6C] hover:bg-blue-900 text-white text-xs font-bold rounded-xl shadow-sm">Xác nhận phân công</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        let khoaHocChonId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('nguoi_huong_dan')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            await taiDanhSachKhoaHoc();
+        });
+
+        async function taiDanhSachKhoaHoc() {
+            const tbody = document.getElementById('bang-khoa-hoc-body');
+            const ketQua = await goiApi('/api/khoa-hoc');
+
+            if (!ketQua.thanhCong || ketQua.duLieu.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-12 text-center text-slate-400">Chưa có khóa học nào.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = ketQua.duLieu.map(kh => `
+                <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-4 px-6 font-mono font-bold text-xs text-[#F37021]">${kh.ma_khoa_hoc}</td>
+                    <td class="py-4 px-6">
+                        <strong class="font-bold text-slate-900 block">${kh.tieu_de}</strong>
+                        <span class="text-xs text-slate-400">⏱️ ${kh.thoi_luong_gio} giờ • Tạo bởi: ${kh.ten_nguoi_tao || 'Ban Đào Tạo'}</span>
+                    </td>
+                    <td class="py-4 px-6 text-center text-xs text-slate-600">
+                        <span class="font-bold text-slate-800">${kh.tong_so_chuong}</span> chương / 
+                        <span class="font-bold text-slate-800">${kh.tong_so_bai_hoc}</span> bài
+                    </td>
+                    <td class="py-4 px-6 text-center font-bold text-xs text-slate-800">
+                        ${kh.so_hoc_vien_tham_gia || 0} học viên
+                    </td>
+                    <td class="py-4 px-6 text-center">
+                        <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 font-bold text-xs rounded-full">Đang diễn ra</span>
+                    </td>
+                    <td class="py-4 px-6 text-right space-x-1.5">
+                        <button type="button" onclick="moModalQuanLyBaiHoc(${kh.id}, '${kh.tieu_de}')" 
+                            class="px-2.5 py-1.5 bg-blue-50 text-[#002C6C] hover:bg-blue-100 font-semibold text-xs rounded-lg transition">
+                            Bài học
+                        </button>
+                        <button type="button" onclick="moModalPhanCongKhoaHoc(${kh.id}, '${kh.tieu_de}')" 
+                            class="px-2.5 py-1.5 bg-orange-50 text-[#F37021] hover:bg-orange-100 font-semibold text-xs rounded-lg transition">
+                            Gán học viên
+                        </button>
+                        <button type="button" onclick="xoaKhoaHoc(${kh.id})" 
+                            class="px-2.5 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 font-semibold text-xs rounded-lg transition">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Modal Thêm Khóa học
+        function moModalThemKhoaHoc() {
+            document.getElementById('form-khoa-hoc').reset();
+            document.getElementById('modal-khoa-hoc').classList.remove('hidden');
+        }
+        function dongModalKhoaHoc() {
+            document.getElementById('modal-khoa-hoc').classList.add('hidden');
+        }
+
+        async function xuLyLuuKhoaHoc(e) {
+            e.preventDefault();
+            const maKhoaHoc = document.getElementById('maKhoaHoc').value;
+            const tieuDe = document.getElementById('tieuDe').value;
+            const moTa = document.getElementById('moTa').value;
+            const thoiLuongGio = document.getElementById('thoiLuongGio').value;
+            const anhKhoaHoc = document.getElementById('anhKhoaHoc').value;
+
+            const ketQua = await goiApi('/api/khoa-hoc', 'POST', {
+                maKhoaHoc, tieuDe, moTa, thoiLuongGio, anhKhoaHoc
+            });
+
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                dongModalKhoaHoc();
+                await taiDanhSachKhoaHoc();
+            } else {
+                hienThiThongBao(ketQua.thongBao || 'Lỗi khi tạo khóa học!', 'loi');
+            }
+        }
+
+        async function xoaKhoaHoc(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa khóa học này cùng toàn bộ bài học bên trong?')) return;
+            const ketQua = await goiApi(`/api/khoa-hoc/${id}`, 'DELETE');
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                await taiDanhSachKhoaHoc();
+            }
+        }
+
+        // Modal Quản lý Bài học & Chương
+        async function moModalQuanLyBaiHoc(idKhoa, tieuDe) {
+            khoaHocChonId = idKhoa;
+            document.getElementById('modal-bai-hoc-tieu-de-khoa').textContent = `Quản lý Bài học: ${tieuDe}`;
+            document.getElementById('modal-bai-hoc').classList.remove('hidden');
+            await taiDuLieuBaiHocCuaKhoa(idKhoa);
+        }
+        function dongModalBaiHoc() {
+            document.getElementById('modal-bai-hoc').classList.add('hidden');
+        }
+
+        async function taiDuLieuBaiHocCuaKhoa(idKhoa) {
+            const ketQua = await goiApi(`/api/khoa-hoc/${idKhoa}`);
+            if (!ketQua.thanhCong) return;
+
+            const selectChuong = document.getElementById('chonChuong');
+            selectChuong.innerHTML = ketQua.duLieu.danhSachChuong.map(c => `<option value="${c.id}">${c.tieu_de_chuong}</option>`).join('');
+
+            const khungBai = document.getElementById('danh-sach-bai-hien-tai');
+            khungBai.innerHTML = ketQua.duLieu.danhSachChuong.map(c => `
+                <div class="border border-slate-200 rounded-lg p-3 bg-slate-50">
+                    <strong class="font-bold text-slate-800 block mb-2">${c.tieu_de_chuong}</strong>
+                    <div class="space-y-1.5 pl-2">
+                        ${c.danhSachBaiHoc.map(b => `
+                            <div class="flex items-center justify-between p-2 bg-white rounded border border-slate-100">
+                                <span>${b.loai_bai_hoc === 'video' ? '🎥' : '📄'} ${b.tieu_de_bai_hoc}</span>
+                                <button type="button" onclick="xoaBaiHoc(${b.id})" class="text-rose-500 hover:text-rose-700">Xóa</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function xuLyThemChuong() {
+            const tieuDeChuong = document.getElementById('tieuDeChuongMoi').value.trim();
+            if (!tieuDeChuong) return;
+
+            const ketQua = await goiApi('/api/khoa-hoc/chuong', 'POST', {
+                khoaHocId: khoaHocChonId,
+                tieuDeChuong
+            });
+            if (ketQua.thanhCong) {
+                hienThiThongBao('Thêm chương thành công!', 'thanh_cong');
+                document.getElementById('tieuDeChuongMoi').value = '';
+                await taiDuLieuBaiHocCuaKhoa(khoaHocChonId);
+                await taiDanhSachKhoaHoc();
+            }
+        }
+
+        async function xuLyThemBaiHoc() {
+            const chuongId = document.getElementById('chonChuong').value;
+            const tieuDeBaiHoc = document.getElementById('tieuDeBaiHocMoi').value.trim();
+            const loaiBaiHoc = document.getElementById('loaiBaiHoc').value;
+            const duongDanNoiDung = document.getElementById('duongDanNoiDungMoi').value.trim();
+            const noiDungVanBan = document.getElementById('noiDungVanBanMoi').value.trim();
+
+            if (!tieuDeBaiHoc || !chuongId) {
+                hienThiThongBao('Vui lòng chọn chương và nhập tiêu đề bài học!', 'canh_bao');
+                return;
+            }
+
+            const ketQua = await goiApi('/api/khoa-hoc/bai-hoc', 'POST', {
+                khoaHocId: khoaHocChonId,
+                chuongId,
+                tieuDeBaiHoc,
+                loaiBaiHoc,
+                duongDanNoiDung,
+                noiDungVanBan
+            });
+
+            if (ketQua.thanhCong) {
+                hienThiThongBao('Thêm bài học mới thành công!', 'thanh_cong');
+                document.getElementById('tieuDeBaiHocMoi').value = '';
+                document.getElementById('duongDanNoiDungMoi').value = '';
+                document.getElementById('noiDungVanBanMoi').value = '';
+                await taiDuLieuBaiHocCuaKhoa(khoaHocChonId);
+                await taiDanhSachKhoaHoc();
+            }
+        }
+
+        async function xoaBaiHoc(idBai) {
+            if (!confirm('Bạn có chắc chắn muốn xóa bài học này?')) return;
+            const ketQua = await goiApi(`/api/khoa-hoc/bai-hoc/${idBai}`, 'DELETE');
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                await taiDuLieuBaiHocCuaKhoa(khoaHocChonId);
+                await taiDanhSachKhoaHoc();
+            }
+        }
+
+        // Modal Phân Công Khóa Học
+        async function moModalPhanCongKhoaHoc(idKhoa, tieuDe) {
+            khoaHocChonId = idKhoa;
+            document.getElementById('phan-cong-ten-khoa').textContent = `Khóa: ${tieuDe}`;
+            document.getElementById('modal-phan-cong').classList.remove('hidden');
+
+            // Nạp danh sách thực tập sinh
+            const ketQua = await goiApi('/api/thong-ke/thuc-tap-sinh');
+            if (ketQua.thanhCong) {
+                const selectHocVien = document.getElementById('chonHocVien');
+                selectHocVien.innerHTML = ketQua.duLieu.map(u => `
+                    <option value="${u.id}">${u.ho_ten} (${u.ma_nguoi_dung}) - ${u.nhom_thuc_tap || 'K18'}</option>
+                `).join('');
+            }
+        }
+        function dongModalPhanCong() {
+            document.getElementById('modal-phan-cong').classList.add('hidden');
+        }
+
+        async function xuLyLuuPhanCong() {
+            const nguoiDungId = document.getElementById('chonHocVien').value;
+            const hanHoanThanh = document.getElementById('hanHoanThanh').value;
+
+            const ketQua = await goiApi('/api/khoa-hoc/phan-cong', 'POST', {
+                khoaHocId: khoaHocChonId,
+                nguoiDungId,
+                hanHoanThanh
+            });
+
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                dongModalPhanCong();
+                await taiDanhSachKhoaHoc();
+            } else {
+                hienThiThongBao(ketQua.thongBao || 'Lỗi phân công!', 'loi');
+            }
+        }
+    </script>
+</body>
+</html>

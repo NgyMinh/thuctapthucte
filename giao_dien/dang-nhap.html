@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Đăng nhập Hệ thống Đào tạo Nội bộ - FPT Software</title>
+		<!-- Tailwind CSS CDN -->
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link rel="stylesheet" href="/giao-dien/chung/fpt-style.css" />
+	</head>
+	<body class="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+		<div class="w-full max-w-md">
+			<!-- Logo và Tiêu đề hệ thống -->
+			<div class="text-center mb-8">
+				<div class="inline-flex items-center justify-center space-x-2 mb-3">
+					<span class="px-3 py-1 bg-[#F37021] text-white font-extrabold text-2xl tracking-wider rounded-lg shadow-sm">FPT</span>
+					<span class="text-2xl font-bold text-[#002C6C] tracking-tight">Software</span>
+				</div>
+				<h1 class="text-xl font-bold text-slate-800 uppercase tracking-wide">Hệ Thống Đào Tạo Nội Bộ</h1>
+				<p class="text-sm text-slate-500 mt-1">Cổng thông tin E-Learning & Đánh giá năng lực trực tuyến</p>
+			</div>
+
+			<!-- Khung Đăng nhập (Card-based UI với khoảng trắng rộng rãi) -->
+			<div class="bg-white rounded-2xl shadow-xl border border-slate-200/80 p-8">
+				<div class="mb-6">
+					<h2 class="text-xl font-semibold text-slate-800 text-center">ĐĂNG NHẬP TÀI KHOẢN</h2>
+					<p class="text-xs text-slate-500 mt-0.5 text-center">Nhập thông tin xác thực để truy cập tài khoản của bạn</p>
+				</div>
+
+				<form id="form-dang-nhap" class="space-y-5" onsubmit="xuLyDangNhap(event)">
+					<!-- Tên đăng nhập hoặc Email -->
+					<div>
+						<label for="taiKhoan" class="block text-sm font-medium text-slate-700 mb-1.5">Tên đăng nhập hoặc Email</label>
+						<div class="relative">
+							<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+								</svg>
+							</div>
+							<input
+								type="text"
+								id="taiKhoan"
+								required
+								placeholder="Nhập tên đăng nhập hoặc email của bạn"
+								class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#F37021]/50 focus:border-[#F37021] transition"
+							/>
+						</div>
+					</div>
+
+					<!-- Mật khẩu -->
+					<div>
+						<div class="flex items-center justify-between mb-1.5">
+							<label for="matKhau" class="block text-sm font-medium text-slate-700">Mật khẩu</label>
+						</div>
+						<div class="relative">
+							<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+								<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+									></path>
+								</svg>
+							</div>
+							<input
+								type="password"
+								id="matKhau"
+								required
+								placeholder="Nhập mật khẩu của bạn"
+								class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-800 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#F37021]/50 focus:border-[#F37021] transition"
+							/>
+						</div>
+					</div>
+
+					<!-- Nút Đăng nhập -->
+					<button
+						type="submit"
+						id="nut-dang-nhap"
+						class="w-full py-3 px-4 bg-[#F37021] hover:bg-[#E05D10] text-white font-semibold rounded-xl shadow-md shadow-orange-500/20 text-sm flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.99]"
+					>
+						<span>Đăng nhập hệ thống</span>
+						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+						</svg>
+					</button>
+				</form>
+
+				<!-- Hộp chọn nhanh tài khoản kiểm thử (Dành cho việc chấm điểm / Demo nhanh chóng) -->
+				<!-- <div class="mt-8 pt-6 border-t border-slate-200">
+					<p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2.5 text-center">Tài khoản demo sẵn sàng kiểm thử:</p>
+					<div class="grid grid-cols-2 gap-2 text-xs">
+						<button
+							type="button"
+							onclick="chonTaiKhoanDemo('mentor_dung', '123')"
+							class="p-2.5 rounded-lg border border-blue-200 bg-blue-50/70 hover:bg-blue-100/70 text-[#002C6C] text-left transition flex flex-col"
+						>
+							<span class="font-bold flex items-center"> <span class="w-2 h-2 rounded-full bg-blue-600 mr-1.5"></span>Người hướng dẫn </span>
+							<span class="text-[11px] text-slate-500 mt-0.5">mentor_dung / pass...</span>
+						</button>
+						<button
+							type="button"
+							onclick="chonTaiKhoanDemo('intern_an', '123')"
+							class="p-2.5 rounded-lg border border-orange-200 bg-orange-50/70 hover:bg-orange-100/70 text-[#F37021] text-left transition flex flex-col"
+						>
+							<span class="font-bold flex items-center"> <span class="w-2 h-2 rounded-full bg-[#F37021] mr-1.5"></span>Thực tập sinh Java </span>
+							<span class="text-[11px] text-slate-500 mt-0.5">intern_an / pass...</span>
+						</button>
+					</div>
+				</div> -->
+			</div>
+
+			<!-- Chân trang bản quyền FPT -->
+			<div class="text-center mt-6 text-xs text-slate-400">&copy; 2026 Bản quyền thuộc Công ty Phần mềm FPT (FPT Software). Bảo lưu mọi quyền.</div>
+		</div>
+
+		<script src="/giao-dien/chung/ungDung.js"></script>
+		<script>
+			// Tự động kiểm tra nếu đã đăng nhập trước đó thì chuyển hướng
+			document.addEventListener("DOMContentLoaded", () => {
+				const nguoiDung = layThongTinNguoiDung();
+				const token = layTokenXacThuc();
+				if (token && nguoiDung) {
+					if (nguoiDung.vaiTro === "nguoi_huong_dan") {
+						window.location.href = "/giao-dien/quan-tri/tong-quan.html";
+					} else {
+						window.location.href = "/giao-dien/thuc-tap-sinh/tong-quan.html";
+					}
+				}
+			});
+
+			// Hàm chọn nhanh tài khoản kiểm thử
+			function chonTaiKhoanDemo(taiKhoan, matKhau) {
+				document.getElementById("taiKhoan").value = taiKhoan;
+				document.getElementById("matKhau").value = matKhau;
+			}
+
+			// Xử lý gửi biểu mẫu đăng nhập
+			async function xuLyDangNhap(suKien) {
+				suKien.preventDefault();
+				const taiKhoan = document.getElementById("taiKhoan").value.trim();
+				const matKhau = document.getElementById("matKhau").value;
+				const nutBam = document.getElementById("nut-dang-nhap");
+
+				nutBam.disabled = true;
+				nutBam.innerHTML = `
+                <svg class="animate-spin h-4 w-4 text-white mr-2" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                <span>Đang xác thực quyền...</span>
+            `;
+
+				try {
+					const ketQua = await goiApi("/api/xac-thuc/dang-nhap", "POST", { taiKhoan, matKhau });
+
+					if (ketQua.thanhCong) {
+						luuPhienDangNhap(ketQua.token, ketQua.nguoiDung);
+						hienThiThongBao(ketQua.thongBao, "thanh_cong");
+
+						setTimeout(() => {
+							window.location.href = ketQua.duongDanChuyenHuong;
+						}, 800);
+					} else {
+						hienThiThongBao(ketQua.thongBao || "Đăng nhập không thành công!", "loi");
+						nutBam.disabled = false;
+						nutBam.innerHTML = `<span>Đăng nhập hệ thống</span><svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+					}
+				} catch (loi) {
+					hienThiThongBao("Lỗi kết nối máy chủ khi đăng nhập!", "loi");
+					nutBam.disabled = false;
+					nutBam.innerHTML = `<span>Đăng nhập hệ thống</span><svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngân hàng Câu hỏi Trắc nghiệm - FPT Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Header Navbar Quản Trị -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 bg-[#F37021] text-white font-black text-xl rounded">FPT</span>
+                    <span class="text-xl font-bold text-[#002C6C]">Software</span>
+                </a>
+            </div>
+
+            <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Tổng quan</a>
+                <a href="/giao-dien/quan-tri/quan-ly-khoa-hoc.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Khóa học & Bài học</a>
+                <a href="/giao-dien/quan-tri/quan-ly-cau-hoi.html" class="px-3 py-2 text-[#F37021] bg-orange-50 rounded-lg font-bold">Ngân hàng câu hỏi</a>
+                <a href="/giao-dien/quan-tri/quan-ly-de-thi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Đề thi & Trộn đề</a>
+                <a href="/giao-dien/quan-tri/thong-ke-ket-qua.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Bảng điểm & Thống kê</a>
+                <a href="/giao-dien/quan-tri/quan-ly-thuc-tap-sinh.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Thực tập sinh</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/ho-so.html" class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm" id="avatar-chu-cai">M</a>
+                <button onclick="dangXuatHeThong()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tiêu đề trang -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900">Ngân hàng Câu hỏi Trắc nghiệm</h1>
+                <p class="text-sm text-slate-500 mt-1">Quản lý câu hỏi đánh giá theo từng chủ đề công nghệ (Java, Frontend, Quy trình Agile, SQL...).</p>
+            </div>
+            <div>
+                <button type="button" onclick="moModalThemCauHoi()"
+                    class="px-4 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-semibold rounded-xl shadow-sm transition inline-flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Thêm câu hỏi mới</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Thanh Tìm kiếm & Bộ Lọc Nâng Cao -->
+        <div class="the-card-fpt p-5 bg-white border border-slate-200 mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                <div>
+                    <label class="block text-slate-600 font-semibold mb-1">Chủ đề công nghệ:</label>
+                    <select id="locChuDe" onchange="taiDanhSachCauHoi()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg">
+                        <option value="">-- Tất cả chủ đề --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-600 font-semibold mb-1">Độ khó:</label>
+                    <select id="locMucDo" onchange="taiDanhSachCauHoi()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg">
+                        <option value="">-- Tất cả mức độ --</option>
+                        <option value="de">Dễ</option>
+                        <option value="trung_binh">Trung bình</option>
+                        <option value="kho">Khó</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-600 font-semibold mb-1">Loại câu hỏi:</label>
+                    <select id="locLoai" onchange="taiDanhSachCauHoi()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg">
+                        <option value="">-- Tất cả loại --</option>
+                        <option value="mot_dap_an">Một đáp án</option>
+                        <option value="nhieu_dap_an">Nhiều đáp án</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-slate-600 font-semibold mb-1">Tìm kiếm từ khóa:</label>
+                    <div class="relative">
+                        <input type="text" id="locTuKhoa" placeholder="Nội dung câu hỏi..." oninput="taiDanhSachCauHoi()"
+                            class="w-full pl-8 pr-3 py-2 bg-slate-50 border border-slate-300 rounded-lg">
+                        <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách Câu hỏi (Card List) -->
+        <div id="danh-sach-cau-hoi-container" class="space-y-4">
+            <div class="the-card-fpt p-12 text-center text-slate-400">Đang tải ngân hàng câu hỏi...</div>
+        </div>
+    </main>
+
+    <!-- Modal Thêm / Chỉnh Sửa Câu Hỏi Trắc Nghiệm -->
+    <div id="modal-cau-hoi" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-lg font-bold text-slate-900 mb-1" id="modal-tieu-de-cau-hoi">Thêm Câu hỏi Trắc nghiệm mới</h3>
+            <p class="text-xs text-slate-500 mb-6">Thiết lập câu hỏi và các phương án trả lời kèm lời giải thích chuẩn FPT.</p>
+
+            <form id="form-cau-hoi" onsubmit="xuLyLuuCauHoi(event)" class="space-y-4 text-xs sm:text-sm">
+                <input type="hidden" id="cauHoiEditId">
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Chủ đề công nghệ *</label>
+                        <select id="formChuDeId" required class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs"></select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Loại câu hỏi *</label>
+                        <select id="formLoaiCauHoi" onchange="doiLoaiCauHoiForm()" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs">
+                            <option value="mot_dap_an">Một đáp án (Radio)</option>
+                            <option value="nhieu_dap_an">Nhiều đáp án (Checkbox)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Mức độ khó *</label>
+                        <select id="formMucDo" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs">
+                            <option value="de">Dễ</option>
+                            <option value="trung_binh" selected>Trung bình</option>
+                            <option value="kho">Khó</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nội dung câu hỏi *</label>
+                    <textarea id="formNoiDungCauHoi" rows="3" required placeholder="Nhập chi tiết câu hỏi trắc nghiệm..."
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50"></textarea>
+                </div>
+
+                <!-- Danh sách các đáp án lựa chọn -->
+                <div class="pt-2 border-t border-slate-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider">
+                            Các phương án trả lời (Tích chọn ô đáp án đúng) *
+                        </label>
+                        <button type="button" onclick="themDongDapAn()" class="text-xs font-semibold text-[#F37021] hover:underline">
+                            + Thêm lựa chọn
+                        </button>
+                    </div>
+                    
+                    <div id="danh-sach-form-dap-an" class="space-y-2.5">
+                        <!-- Nạp động 4 dòng đáp án mặc định -->
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Lời giải thích chi tiết (Hiển thị sau khi thí sinh nộp bài)</label>
+                    <textarea id="formGiaiThich" rows="2" placeholder="Giải thích lý do vì sao đáp án này đúng để giúp thực tập sinh ôn tập..."
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50"></textarea>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="dongModalCauHoi()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Hủy</button>
+                    <button type="submit" class="px-5 py-2 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-bold rounded-xl shadow-sm">Lưu câu hỏi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        let danhSachChuDeGoc = [];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('nguoi_huong_dan')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            await taiDanhSachChuDe();
+            await taiDanhSachCauHoi();
+        });
+
+        async function taiDanhSachChuDe() {
+            const ketQua = await goiApi('/api/cau-hoi/chu-de');
+            if (ketQua.thanhCong) {
+                danhSachChuDeGoc = ketQua.duLieu;
+
+                const locChuDe = document.getElementById('locChuDe');
+                locChuDe.innerHTML = '<option value="">-- Tất cả chủ đề --</option>' + 
+                    danhSachChuDeGoc.map(c => `<option value="${c.id}">${c.ten_chu_de} (${c.tong_so_cau_hoi})</option>`).join('');
+
+                const formChuDe = document.getElementById('formChuDeId');
+                formChuDe.innerHTML = danhSachChuDeGoc.map(c => `<option value="${c.id}">${c.ten_chu_de}</option>`).join('');
+            }
+        }
+
+        async function taiDanhSachCauHoi() {
+            const chuDeId = document.getElementById('locChuDe').value;
+            const mucDo = document.getElementById('locMucDo').value;
+            const loaiCauHoi = document.getElementById('locLoai').value;
+            const tuKhoa = document.getElementById('locTuKhoa').value;
+
+            const thamSo = new URLSearchParams();
+            if (chuDeId) thamSo.append('chuDeId', chuDeId);
+            if (mucDo) thamSo.append('mucDo', mucDo);
+            if (loaiCauHoi) thamSo.append('loaiCauHoi', loaiCauHoi);
+            if (tuKhoa) thamSo.append('tuKhoa', tuKhoa);
+
+            const khungChua = document.getElementById('danh-sach-cau-hoi-container');
+            const ketQua = await goiApi(`/api/cau-hoi?${thamSo.toString()}`);
+
+            if (!ketQua.thanhCong || ketQua.duLieu.length === 0) {
+                khungChua.innerHTML = `<div class="the-card-fpt p-12 text-center text-slate-400">Không tìm thấy câu hỏi phù hợp.</div>`;
+                return;
+            }
+
+            khungChua.innerHTML = ketQua.duLieu.map((ch, index) => {
+                let nhanMucDo = '<span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded">Dễ</span>';
+                if (ch.muc_do === 'trung_binh') nhanMucDo = '<span class="px-2 py-0.5 bg-amber-50 text-amber-700 text-[11px] font-bold rounded">Trung bình</span>';
+                if (ch.muc_do === 'kho') nhanMucDo = '<span class="px-2 py-0.5 bg-rose-50 text-rose-700 text-[11px] font-bold rounded">Khó</span>';
+
+                const loaiNhan = ch.loai_cau_hoi === 'nhieu_dap_an' ? 'Nhiều đáp án' : '1 đáp án';
+
+                return `
+                    <div class="the-card-fpt p-6 bg-white border border-slate-200">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2.5 py-0.5 bg-blue-50 text-[#002C6C] font-bold text-xs rounded">${ch.ten_chu_de}</span>
+                                ${nhanMucDo}
+                                <span class="text-xs text-slate-400">(${loaiNhan})</span>
+                            </div>
+                            <div class="space-x-2">
+                                <button type="button" onclick="xoaCauHoi(${ch.id})" class="text-xs text-rose-500 hover:text-rose-700 font-semibold">Xóa</button>
+                            </div>
+                        </div>
+
+                        <h3 class="text-sm sm:text-base font-bold text-slate-900 mb-3 leading-relaxed">
+                            Câu ${index + 1}: ${ch.noi_dung_cau_hoi}
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            ${(ch.danhSachDapAn || []).map((da, idx) => {
+                                const chuCai = String.fromCharCode(65 + idx);
+                                const laDung = da.la_dap_an_dung == 1;
+                                return `
+                                    <div class="p-2.5 rounded-lg border ${laDung ? 'bg-emerald-50 border-emerald-300 text-emerald-900 font-semibold' : 'bg-slate-50 border-slate-200 text-slate-600'} flex items-center justify-between">
+                                        <span><strong>${chuCai}.</strong> ${da.noi_dung_dap_an}</span>
+                                        ${laDung ? '<span class="text-emerald-600 font-bold ml-2">✓ Đúng</span>' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        ${ch.giai_thich_dap_an ? `
+                            <p class="mt-3 text-xs text-slate-500 italic bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                                💡 Giải thích: ${ch.giai_thich_dap_an}
+                            </p>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Quản lý Modal Thêm / Sửa
+        function moModalThemCauHoi() {
+            document.getElementById('form-cau-hoi').reset();
+            document.getElementById('cauHoiEditId').value = '';
+            document.getElementById('modal-tieu-de-cau-hoi').textContent = 'Thêm Câu hỏi Trắc nghiệm mới';
+
+            // Khởi tạo 4 dòng đáp án mặc định
+            const khungDa = document.getElementById('danh-sach-form-dap-an');
+            khungDa.innerHTML = '';
+            for (let i = 0; i < 4; i++) {
+                themDongDapAn(i === 0);
+            }
+
+            document.getElementById('modal-cau-hoi').classList.remove('hidden');
+        }
+
+        function dongModalCauHoi() {
+            document.getElementById('modal-cau-hoi').classList.add('hidden');
+        }
+
+        function themDongDapAn(laDapAnDungMacDinh = false) {
+            const khungDa = document.getElementById('danh-sach-form-dap-an');
+            const soLuongHienTai = khungDa.children.length;
+            const chuCai = String.fromCharCode(65 + soLuongHienTai);
+            const loai = document.getElementById('formLoaiCauHoi').value;
+            const kieuInput = (loai === 'nhieu_dap_an') ? 'checkbox' : 'radio';
+
+            const div = document.createElement('div');
+            div.className = 'flex items-center space-x-2';
+            div.innerHTML = `
+                <input type="${kieuInput}" name="chonDapAnDung" class="w-4 h-4 text-[#F37021] focus:ring-[#F37021] border-slate-300" ${laDapAnDungMacDinh ? 'checked' : ''}>
+                <span class="font-bold text-xs text-slate-500 w-4">${chuCai}.</span>
+                <input type="text" placeholder="Nhập nội dung phương án ${chuCai}" required
+                    class="flex-1 px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#F37021]/50 noi-dung-da">
+                ${soLuongHienTai >= 2 ? `<button type="button" onclick="this.parentElement.remove()" class="text-rose-500 hover:text-rose-700 text-xs px-2">✕</button>` : ''}
+            `;
+            khungDa.appendChild(div);
+        }
+
+        function doiLoaiCauHoiForm() {
+            const loai = document.getElementById('formLoaiCauHoi').value;
+            const inputs = document.querySelectorAll('input[name="chonDapAnDung"]');
+            inputs.forEach(inp => {
+                inp.type = (loai === 'nhieu_dap_an') ? 'checkbox' : 'radio';
+            });
+        }
+
+        async function xuLyLuuCauHoi(e) {
+            e.preventDefault();
+            const chuDeId = document.getElementById('formChuDeId').value;
+            const loaiCauHoi = document.getElementById('formLoaiCauHoi').value;
+            const mucDo = document.getElementById('formMucDo').value;
+            const noiDungCauHoi = document.getElementById('formNoiDungCauHoi').value;
+            const giaiThichDapAn = document.getElementById('formGiaiThich').value;
+
+            // Thu thập các đáp án
+            const khungDa = document.getElementById('danh-sach-form-dap-an');
+            const danhSachDapAn = [];
+
+            const cacDong = khungDa.querySelectorAll('.flex.items-center.space-x-2');
+            cacDong.forEach(dong => {
+                const checked = dong.querySelector('input[name="chonDapAnDung"]').checked;
+                const noiDung = dong.querySelector('.noi-dung-da').value.trim();
+                if (noiDung) {
+                    danhSachDapAn.push({
+                        noiDungDapAn: noiDung,
+                        laDapAnDung: checked
+                    });
+                }
+            });
+
+            if (danhSachDapAn.length < 2) {
+                hienThiThongBao('Vui lòng nhập ít nhất 2 đáp án lựa chọn!', 'canh_bao');
+                return;
+            }
+
+            const coDapAnDung = danhSachDapAn.some(da => da.laDapAnDung);
+            if (!coDapAnDung) {
+                hienThiThongBao('Phải đánh dấu ít nhất 1 đáp án đúng!', 'canh_bao');
+                return;
+            }
+
+            const ketQua = await goiApi('/api/cau-hoi', 'POST', {
+                chuDeId, loaiCauHoi, mucDo, noiDungCauHoi, giaiThichDapAn, danhSachDapAn
+            });
+
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                dongModalCauHoi();
+                await taiDanhSachChuDe();
+                await taiDanhSachCauHoi();
+            } else {
+                hienThiThongBao(ketQua.thongBao || 'Lỗi khi tạo câu hỏi!', 'loi');
+            }
+        }
+
+        async function xoaCauHoi(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa câu hỏi này khỏi ngân hàng?')) return;
+            const ketQua = await goiApi(`/api/cau-hoi/${id}`, 'DELETE');
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                await taiDanhSachChuDe();
+                await taiDanhSachCauHoi();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Đề thi & Trộn đề Tự động - FPT Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Header Navbar Quản Trị -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 bg-[#F37021] text-white font-black text-xl rounded">FPT</span>
+                    <span class="text-xl font-bold text-[#002C6C]">Software</span>
+                </a>
+            </div>
+
+            <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Tổng quan</a>
+                <a href="/giao-dien/quan-tri/quan-ly-khoa-hoc.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Khóa học & Bài học</a>
+                <a href="/giao-dien/quan-tri/quan-ly-cau-hoi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Ngân hàng câu hỏi</a>
+                <a href="/giao-dien/quan-tri/quan-ly-de-thi.html" class="px-3 py-2 text-[#F37021] bg-orange-50 rounded-lg font-bold">Đề thi & Trộn đề</a>
+                <a href="/giao-dien/quan-tri/thong-ke-ket-qua.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Bảng điểm & Thống kê</a>
+                <a href="/giao-dien/quan-tri/quan-ly-thuc-tap-sinh.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Thực tập sinh</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/ho-so.html" class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm" id="avatar-chu-cai">M</a>
+                <button onclick="dangXuatHeThong()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tiêu đề trang -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900">Quản lý Đề thi & Cấu hình Trộn đề</h1>
+                <p class="text-sm text-slate-500 mt-1">Tạo bài kiểm tra đánh giá năng lực, thiết lập thời gian làm bài, điểm chuẩn đạt và cơ chế trộn đề ngẫu nhiên chống gian lận.</p>
+            </div>
+            <div>
+                <button type="button" onclick="moModalTaoDeThi()"
+                    class="px-4 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-semibold rounded-xl shadow-sm transition inline-flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Tạo đề thi mới</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bảng danh sách đề thi (Table Layout với khoảng cách thoáng rộng) -->
+        <div class="the-card-fpt overflow-hidden bg-white border border-slate-200">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs sm:text-sm">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+                        <tr>
+                            <th class="py-4 px-6">Mã đề thi</th>
+                            <th class="py-4 px-6">Tiêu đề bài thi</th>
+                            <th class="py-4 px-6 text-center">Thời gian</th>
+                            <th class="py-4 px-6 text-center">Số câu</th>
+                            <th class="py-4 px-6 text-center">Điểm chuẩn</th>
+                            <th class="py-4 px-6 text-center">Cơ chế trộn</th>
+                            <th class="py-4 px-6 text-center">Trạng thái</th>
+                            <th class="py-4 px-6 text-right">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bang-de-thi-body" class="divide-y divide-slate-100">
+                        <tr>
+                            <td colspan="8" class="py-12 text-center text-slate-400">Đang tải danh sách đề thi...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Tạo Đề Thi Mới (Có chức năng Trộn đề Tự động) -->
+    <div id="modal-de-thi" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <h3 class="text-lg font-bold text-slate-900 mb-1">Tạo Đề thi Đánh giá Năng lực mới</h3>
+            <p class="text-xs text-slate-500 mb-6">Cấu hình thời gian, điểm chuẩn và lựa chọn bốc câu hỏi tự động từ ngân hàng.</p>
+
+            <form id="form-de-thi" onsubmit="xuLyLuuDeThi(event)" class="space-y-4 text-xs sm:text-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Mã đề thi *</label>
+                        <input type="text" id="maDeThi" required placeholder="Ví dụ: DT_FPT_JV02"
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Khóa học liên kết (Tùy chọn)</label>
+                        <select id="khoaHocId" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm">
+                            <option value="">-- Đánh giá độc lập --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Tiêu đề bài kiểm tra *</label>
+                    <input type="text" id="tieuDeDeThi" required placeholder="Ví dụ: Sát hạch Fresher Java Core & OOP..."
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Mô tả bài thi</label>
+                    <textarea id="moTaDeThi" rows="2" placeholder="Yêu cầu và phạm vi kiến thức đánh giá..."
+                        class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Thời gian (phút) *</label>
+                        <input type="number" id="thoiGianLamBaiPhut" value="20" min="5" max="180" required
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Số lượng câu *</label>
+                        <input type="number" id="soCauHoi" value="5" min="2" max="100" required
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Điểm chuẩn ĐẠT *</label>
+                        <input type="number" id="diemChuanDat" value="8.0" step="0.5" min="1" max="10" required
+                            class="w-full px-3.5 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#F37021]/50">
+                    </div>
+                </div>
+
+                <!-- Cấu hình Trộn Đề Tự Động (Chức năng cốt lõi) -->
+                <div class="p-4 bg-orange-50/70 border border-orange-200 rounded-xl space-y-3">
+                    <div class="flex items-center space-x-2">
+                        <input type="checkbox" id="choPhepTronDe" checked
+                            class="w-4 h-4 text-[#F37021] focus:ring-[#F37021] border-slate-300 rounded">
+                        <label for="choPhepTronDe" class="font-bold text-xs text-[#002C6C] cursor-pointer">
+                            Bật cơ chế Trộn đề tự động (Xáo trộn câu hỏi & thứ tự đáp án ngẫu nhiên cho từng thí sinh)
+                        </label>
+                    </div>
+                    <p class="text-[11px] text-slate-500 leading-relaxed pl-6">
+                        Hệ thống sẽ bốc ngẫu nhiên câu hỏi từ ngân hàng theo các chủ đề được chọn bên dưới và tạo ra mã đề riêng biệt khi thực tập sinh bắt đầu thi, hạn chế tối đa việc gian lận.
+                    </p>
+
+                    <div class="pt-2 pl-6">
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">Bốc câu hỏi từ các chủ đề sau:</label>
+                        <div id="danh-sach-chon-chu-de" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                            <!-- Nạp động danh sách checkbox chủ đề -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end space-x-3">
+                    <button type="button" onclick="dongModalTaoDeThi()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl">Hủy</button>
+                    <button type="submit" class="px-5 py-2 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-bold rounded-xl shadow-sm">Khởi tạo đề thi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('nguoi_huong_dan')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            await taiDanhSachDeThi();
+        });
+
+        async function taiDanhSachDeThi() {
+            const tbody = document.getElementById('bang-de-thi-body');
+            const ketQua = await goiApi('/api/de-thi');
+
+            if (!ketQua.thanhCong || ketQua.duLieu.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="py-12 text-center text-slate-400">Chưa có đề thi nào.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = ketQua.duLieu.map(dt => {
+                const dangMo = dt.trang_thai === 'kich_hoat';
+
+                return `
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-4 px-6 font-mono font-bold text-xs text-[#002C6C]">${dt.ma_de_thi}</td>
+                        <td class="py-4 px-6">
+                            <strong class="font-bold text-slate-900 block">${dt.tieu_de_de_thi}</strong>
+                            <span class="text-xs text-slate-400">${dt.ten_khoa_hoc || 'Đánh giá độc lập'} • Lượt thi: ${dt.tong_so_luot_thi || 0}</span>
+                        </td>
+                        <td class="py-4 px-6 text-center text-xs font-semibold text-slate-700">⏱️ ${dt.thoi_gian_lam_bai_phut} phút</td>
+                        <td class="py-4 px-6 text-center text-xs font-semibold text-slate-700">📝 ${dt.so_cau_hoi} câu</td>
+                        <td class="py-4 px-6 text-center text-xs font-bold text-emerald-600">🎯 ${dt.diem_chuan_dat} đ</td>
+                        <td class="py-4 px-6 text-center">
+                            ${dt.cho_phep_tron_de == 1 
+                                ? `<span class="px-2.5 py-1 bg-blue-50 text-[#002C6C] text-xs font-bold rounded-full">🔀 Tự động</span>`
+                                : `<span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Cố định</span>`
+                            }
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            ${dangMo 
+                                ? `<span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">Đang mở</span>`
+                                : `<span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">Đã đóng</span>`
+                            }
+                        </td>
+                        <td class="py-4 px-6 text-right space-x-2">
+                            <button type="button" onclick="doiTrangThaiDeThi(${dt.id}, '${dangMo ? 'da_dong' : 'kich_hoat'}')" 
+                                class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition">
+                                ${dangMo ? 'Đóng' : 'Mở'}
+                            </button>
+                            <button type="button" onclick="xoaDeThi(${dt.id})" 
+                                class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-lg transition">
+                                Xóa
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Modal Tạo Đề
+        async function moModalTaoDeThi() {
+            document.getElementById('form-de-thi').reset();
+            document.getElementById('choPhepTronDe').checked = true;
+
+            // Nạp danh sách khóa học
+            const kqKhoa = await goiApi('/api/khoa-hoc');
+            if (kqKhoa.thanhCong) {
+                const s = document.getElementById('khoaHocId');
+                s.innerHTML = '<option value="">-- Đánh giá độc lập --</option>' + 
+                    kqKhoa.duLieu.map(k => `<option value="${k.id}">${k.tieu_de}</option>`).join('');
+            }
+
+            // Nạp danh sách chủ đề cho checkbox trộn
+            const kqChuDe = await goiApi('/api/cau-hoi/chu-de');
+            if (kqChuDe.thanhCong) {
+                const div = document.getElementById('danh-sach-chon-chu-de');
+                div.innerHTML = kqChuDe.duLieu.map(c => `
+                    <label class="flex items-center space-x-2 p-1.5 rounded hover:bg-orange-100/50 cursor-pointer">
+                        <input type="checkbox" name="chuDeChon" value="${c.id}" checked class="rounded text-[#F37021] focus:ring-[#F37021]">
+                        <span class="truncate">${c.ten_chu_de} (${c.tong_so_cau_hoi})</span>
+                    </label>
+                `).join('');
+            }
+
+            document.getElementById('modal-de-thi').classList.remove('hidden');
+        }
+
+        function dongModalTaoDeThi() {
+            document.getElementById('modal-de-thi').classList.add('hidden');
+        }
+
+        async function xuLyLuuDeThi(e) {
+            e.preventDefault();
+            const maDeThi = document.getElementById('maDeThi').value;
+            const tieuDeDeThi = document.getElementById('tieuDeDeThi').value;
+            const moTa = document.getElementById('moTaDeThi').value;
+            const khoaHocId = document.getElementById('khoaHocId').value || null;
+            const thoiGianLamBaiPhut = document.getElementById('thoiGianLamBaiPhut').value;
+            const soCauHoi = document.getElementById('soCauHoi').value;
+            const diemChuanDat = document.getElementById('diemChuanDat').value;
+            const choPhepTronDe = document.getElementById('choPhepTronDe').checked;
+
+            const danhSachChuDeId = [];
+            document.querySelectorAll('input[name="chuDeChon"]:checked').forEach(cb => {
+                danhSachChuDeId.push(parseInt(cb.value, 10));
+            });
+
+            const ketQua = await goiApi('/api/de-thi', 'POST', {
+                maDeThi,
+                tieuDeDeThi,
+                moTa,
+                khoaHocId,
+                thoiGianLamBaiPhut,
+                soCauHoi,
+                diemChuanDat,
+                choPhepTronDe,
+                danhSachChuDeId
+            });
+
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                dongModalTaoDeThi();
+                await taiDanhSachDeThi();
+            } else {
+                hienThiThongBao(ketQua.thongBao || 'Lỗi tạo đề thi!', 'loi');
+            }
+        }
+
+        async function doiTrangThaiDeThi(id, trangThai) {
+            const ketQua = await goiApi(`/api/de-thi/${id}/trang-thai`, 'PATCH', { trangThai });
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                await taiDanhSachDeThi();
+            }
+        }
+
+        async function xoaDeThi(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa đề thi này?')) return;
+            const ketQua = await goiApi(`/api/de-thi/${id}`, 'DELETE');
+            if (ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                await taiDanhSachDeThi();
+            }
+        }
+    </script>
+</body>
+</html>

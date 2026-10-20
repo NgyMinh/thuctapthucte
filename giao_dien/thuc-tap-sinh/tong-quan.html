@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Tổng quan Người học - FPT Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Thanh Điều Hướng Trên Cùng (Top Navbar) -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/tong-quan.html" class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 bg-[#F37021] text-white font-black text-xl rounded">FPT</span>
+                    <span class="text-xl font-bold text-[#002C6C]">Software</span>
+                    <span class="hidden sm:inline-block text-xs bg-orange-100 text-[#F37021] font-semibold px-2 py-0.5 rounded-full ml-2">Phân hệ Thực tập sinh</span>
+                </a>
+            </div>
+
+            <!-- Menu Điều Hướng -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                <a href="/giao-dien/thuc-tap-sinh/tong-quan.html" class="px-3 py-2 text-[#F37021] bg-orange-50 rounded-lg font-semibold">Trang tổng quan</a>
+                <a href="/giao-dien/thuc-tap-sinh/khoa-hoc.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Khóa học của tôi</a>
+                <a href="/giao-dien/thuc-tap-sinh/danh-sach-bai-thi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Bài thi đánh giá</a>
+                <a href="/giao-dien/thuc-tap-sinh/lich-su-thi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Lịch sử làm bài</a>
+            </nav>
+
+            <!-- Thông tin cá nhân & Đăng xuất -->
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/ho-so.html" class="flex items-center space-x-2 text-left hover:opacity-80 transition">
+                    <div class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm shadow-sm" id="avatar-chu-cai">
+                        A
+                    </div>
+                    <div class="hidden sm:block">
+                        <div class="text-xs font-bold text-slate-800" id="header-ten-nguoi-dung">Lê Hoàng An</div>
+                        <div class="text-[11px] text-slate-500" id="header-nhom">Fresher Java - K18</div>
+                    </div>
+                </a>
+                <button onclick="dangXuatHeThong()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Nội dung chính Dashboard -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Lời chào đầu trang -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900" id="tieu-de-chao">Xin chào, Thực tập sinh!</h1>
+                <p class="text-sm text-slate-500 mt-1">Chào mừng bạn đến với lộ trình đào tạo chuyên môn tại FPT Software.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/thuc-tap-sinh/danh-sach-bai-thi.html" class="inline-flex items-center px-4 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-sm font-semibold rounded-xl shadow-sm transition">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    Vào phòng thi ngay
+                </a>
+            </div>
+        </div>
+
+        <!-- Khối Thẻ Thống Kê Tổng Quan (Dashboard Layout với khoảng cách thoáng rộng) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <!-- Thẻ 1: Khóa học được gán -->
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Khóa học được gán</p>
+                    <h3 class="text-3xl font-extrabold text-[#002C6C] mt-2" id="thong-ke-khoa-hoc">0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Chương trình đào tạo</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#002C6C] flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+            </div>
+
+            <!-- Thẻ 2: Bài thi cần làm -->
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Bài thi sắp đến hạn</p>
+                    <h3 class="text-3xl font-extrabold text-[#F37021] mt-2" id="thong-ke-bai-thi">0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Đánh giá năng lực</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-orange-50 text-[#F37021] flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                </div>
+            </div>
+
+            <!-- Thẻ 3: Tiến độ học tập trung bình -->
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tiến độ học tập</p>
+                    <h3 class="text-3xl font-extrabold text-emerald-600 mt-2" id="thong-ke-tien-do">0%</h3>
+                    <p class="text-xs text-slate-400 mt-1">Hoàn thành bài học</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+
+            <!-- Thẻ 4: Điểm thi trung bình -->
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Điểm thi trung bình</p>
+                    <h3 class="text-3xl font-extrabold text-indigo-600 mt-2" id="thong-ke-diem-tb">0.0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Thang điểm 10</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bố cục 2 cột: Khóa học đang học & Bài kiểm tra sắp tới -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cột trái: Khóa học của tôi (Chiếm 2/3) -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                        <span class="w-2.5 h-6 bg-[#F37021] rounded-sm mr-2.5"></span>
+                        Khóa học được phân công
+                    </h2>
+                    <a href="/giao-dien/thuc-tap-sinh/khoa-hoc.html" class="text-xs font-semibold text-[#F37021] hover:underline">Xem tất cả khóa học &rarr;</a>
+                </div>
+
+                <div id="danh-sach-khoa-hoc-container" class="space-y-4">
+                    <!-- Dữ liệu khóa học nạp động bằng JavaScript -->
+                    <div class="the-card-fpt p-8 text-center text-slate-400">Đang tải danh sách khóa học...</div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Bài thi đánh giá năng lực sắp đến hạn (Chiếm 1/3) -->
+            <div class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                        <span class="w-2.5 h-6 bg-[#002C6C] rounded-sm mr-2.5"></span>
+                        Bài thi đánh giá
+                    </h2>
+                    <a href="/giao-dien/thuc-tap-sinh/danh-sach-bai-thi.html" class="text-xs font-semibold text-[#002C6C] hover:underline">Xem tất cả &rarr;</a>
+                </div>
+
+                <div id="danh-sach-de-thi-container" class="space-y-4">
+                    <!-- Dữ liệu đề thi nạp động bằng JavaScript -->
+                    <div class="the-card-fpt p-8 text-center text-slate-400">Đang tải danh sách đề thi...</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('thuc_tap_sinh')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('tieu-de-chao').textContent = `Xin chào, ${nguoiDung.hoTen}!`;
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            await taiThongKeTongQuan();
+            await taiKhoaHocPhanCong();
+            await taiDeThiDanhGia();
+        });
+
+        // Tải số liệu thống kê tổng quan
+        async function taiThongKeTongQuan() {
+            const ketQua = await goiApi('/api/thong-ke/tong-quan-intern');
+            if (ketQua.thanhCong) {
+                const dl = ketQua.duLieu;
+                document.getElementById('thong-ke-khoa-hoc').textContent = dl.soKhoaHocDuocGan;
+                document.getElementById('thong-ke-bai-thi').textContent = dl.tongDeThiKhaDung;
+                document.getElementById('thong-ke-tien-do').textContent = `${dl.phanTramTienDoTrungBinh}%`;
+                document.getElementById('thong-ke-diem-tb').textContent = dl.diemTrungBinh;
+            }
+        }
+
+        // Tải danh sách khóa học phân công
+        async function taiKhoaHocPhanCong() {
+            const khungChua = document.getElementById('danh-sach-khoa-hoc-container');
+            const ketQua = await goiApi('/api/khoa-hoc');
+
+            if (!ketQua.thanhCong || ketQua.duLieu.length === 0) {
+                khungChua.innerHTML = `
+                    <div class="the-card-fpt p-8 text-center text-slate-400">
+                        Bạn chưa được phân công khóa học nào trong giai đoạn này.
+                    </div>
+                `;
+                return;
+            }
+
+            khungChua.innerHTML = ketQua.duLieu.slice(0, 3).map(kh => `
+                <div class="the-card-fpt p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <img src="${kh.anh_khoa_hoc}" alt="${kh.tieu_de}" class="w-16 h-16 rounded-xl object-cover border border-slate-200 flex-shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <span class="inline-block text-[11px] font-bold text-[#F37021] bg-orange-50 px-2 py-0.5 rounded">${kh.ma_khoa_hoc}</span>
+                            <h3 class="text-sm font-bold text-slate-900 mt-1 line-clamp-1 hover:text-[#F37021] transition">
+                                <a href="/giao-dien/thuc-tap-sinh/chi-tiet-khoa-hoc.html?id=${kh.id}">${kh.tieu_de}</a>
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 line-clamp-1">${kh.mo_ta}</p>
+                            <!-- Thanh tiến độ -->
+                            <div class="mt-3 flex items-center space-x-3">
+                                <div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: ${kh.phanTramTienDo}%"></div>
+                                </div>
+                                <span class="text-xs font-bold text-emerald-600 w-10 text-right">${kh.phanTramTienDo}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 sm:self-center">
+                        <a href="/giao-dien/thuc-tap-sinh/chi-tiet-khoa-hoc.html?id=${kh.id}" 
+                           class="px-4 py-2 bg-slate-100 hover:bg-[#F37021] text-slate-700 hover:text-white text-xs font-semibold rounded-xl transition inline-flex items-center space-x-1">
+                            <span>Vào học</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Tải các đề thi đánh giá năng lực
+        async function taiDeThiDanhGia() {
+            const khungChua = document.getElementById('danh-sach-de-thi-container');
+            const ketQua = await goiApi('/api/de-thi');
+
+            if (!ketQua.thanhCong || ketQua.duLieu.length === 0) {
+                khungChua.innerHTML = `
+                    <div class="the-card-fpt p-8 text-center text-slate-400">
+                        Hiện không có bài thi đánh giá nào sắp đến hạn.
+                    </div>
+                `;
+                return;
+            }
+
+            khungChua.innerHTML = ketQua.duLieu.slice(0, 3).map(dt => {
+                let huyHieuKetQua = '';
+                if (dt.so_lan_da_thi > 0) {
+                    if (dt.ket_qua_gan_nhat === 'dat') {
+                        huyHieuKetQua = `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 text-[11px] font-bold rounded-full">Đã đạt (${dt.diem_thi_gan_nhat} đ)</span>`;
+                    } else {
+                        huyHieuKetQua = `<span class="px-2 py-0.5 bg-rose-100 text-rose-700 text-[11px] font-bold rounded-full">Chưa đạt (${dt.diem_thi_gan_nhat} đ)</span>`;
+                    }
+                } else {
+                    huyHieuKetQua = `<span class="px-2 py-0.5 bg-amber-100 text-amber-700 text-[11px] font-bold rounded-full">Chưa làm</span>`;
+                }
+
+                return `
+                    <div class="the-card-fpt p-5">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">${dt.ma_de_thi}</span>
+                            ${huyHieuKetQua}
+                        </div>
+                        <h4 class="text-sm font-bold text-slate-900 line-clamp-1">${dt.tieu_de_de_thi}</h4>
+                        <div class="flex items-center space-x-3 text-xs text-slate-500 mt-2">
+                            <span>⏱️ ${dt.thoi_gian_lam_bai_phut} phút</span>
+                            <span>•</span>
+                            <span>📝 ${dt.so_cau_hoi} câu</span>
+                            <span>•</span>
+                            <span>🎯 Đạt: ${dt.diem_chuan_dat} đ</span>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                            <span class="text-[11px] text-slate-400">Thời hạn: Không giới hạn</span>
+                            <a href="/giao-dien/thuc-tap-sinh/phong-thi.html?idDeThi=${dt.id}" 
+                               class="px-3 py-1.5 bg-[#002C6C] hover:bg-[#F37021] text-white text-xs font-semibold rounded-lg transition inline-flex items-center">
+                               <span>Làm bài</span>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>

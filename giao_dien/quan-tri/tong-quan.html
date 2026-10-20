@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Quản trị & Điều hành Đào tạo - FPT Software</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Header Navbar Quản Trị -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 bg-[#F37021] text-white font-black text-xl rounded">FPT</span>
+                    <span class="text-xl font-bold text-[#002C6C]">Software</span>
+                    <span class="hidden sm:inline-block text-xs bg-blue-100 text-[#002C6C] font-semibold px-2 py-0.5 rounded-full ml-2">Phân hệ Quản lý & Mentor</span>
+                </a>
+            </div>
+
+            <!-- Menu Điều Hướng Quản Trị -->
+            <nav class="hidden lg:flex items-center space-x-1 text-xs font-semibold">
+                <a href="/giao-dien/quan-tri/tong-quan.html" class="px-3 py-2 text-[#F37021] bg-orange-50 rounded-lg">Tổng quan</a>
+                <a href="/giao-dien/quan-tri/quan-ly-khoa-hoc.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Khóa học & Bài học</a>
+                <a href="/giao-dien/quan-tri/quan-ly-cau-hoi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Ngân hàng câu hỏi</a>
+                <a href="/giao-dien/quan-tri/quan-ly-de-thi.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Đề thi & Trộn đề</a>
+                <a href="/giao-dien/quan-tri/thong-ke-ket-qua.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Bảng điểm & Thống kê</a>
+                <a href="/giao-dien/quan-tri/quan-ly-thuc-tap-sinh.html" class="px-3 py-2 text-slate-600 hover:text-[#002C6C] hover:bg-slate-100 rounded-lg transition">Thực tập sinh</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center space-x-2 text-left">
+                    <div class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm" id="avatar-chu-cai">M</div>
+                    <div class="hidden sm:block">
+                        <div class="text-xs font-bold text-slate-800" id="header-ten-nguoi-dung">Mentor FPT</div>
+                        <div class="text-[11px] text-[#F37021] font-medium" id="header-vai-tro">Người hướng dẫn / Quản lý</div>
+                    </div>
+                </div>
+                <button onclick="dangXuatHeThong()" title="Đăng xuất" class="p-2 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-slate-100 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tiêu đề trang -->
+        <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-slate-900">Bảng điều khiển Quản trị Đào tạo</h1>
+                <p class="text-sm text-slate-500 mt-1">Giám sát năng lực thực tập sinh, ngân hàng câu hỏi và tiến độ các khóa đào tạo nội bộ.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <a href="/giao-dien/quan-tri/quan-ly-de-thi.html" class="px-4 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-semibold rounded-xl shadow-sm transition inline-flex items-center space-x-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                    <span>Tạo đề thi mới</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Khối Thống kê 4 Thẻ Tổng quan (Khoảng cách rộng rãi) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Thực tập sinh</p>
+                    <h3 class="text-3xl font-extrabold text-[#002C6C] mt-2" id="thong-ke-tong-tts">0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Học viên đang quản lý</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#002C6C] flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                </div>
+            </div>
+
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Khóa học đào tạo</p>
+                    <h3 class="text-3xl font-extrabold text-[#F37021] mt-2" id="thong-ke-tong-kh">0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Chương trình E-learning</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-orange-50 text-[#F37021] flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                </div>
+            </div>
+
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Đề thi đang mở</p>
+                    <h3 class="text-3xl font-extrabold text-indigo-600 mt-2" id="thong-ke-tong-dt">0</h3>
+                    <p class="text-xs text-slate-400 mt-1">Đánh giá chuẩn đầu ra</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                </div>
+            </div>
+
+            <div class="the-card-fpt p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tỷ lệ Đạt bài thi</p>
+                    <h3 class="text-3xl font-extrabold text-emerald-600 mt-2" id="thong-ke-ty-le-dat">0%</h3>
+                    <p class="text-xs text-slate-400 mt-1" id="thong-ke-luot-dat-truot">0 lượt đạt / 0 lượt thi</p>
+                </div>
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Biểu đồ thống kê tỷ lệ Đạt / Không đạt & Các bài thi nộp gần đây -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            
+            <!-- Cột trái: Tỷ lệ Đạt / Không đạt trực quan (Chiếm 1/3) -->
+            <div class="the-card-fpt p-6 bg-white border border-slate-200">
+                <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center">
+                    <span class="w-2.5 h-5 bg-emerald-500 rounded-sm mr-2"></span>
+                    Tỷ lệ Đạt / Không đạt (Pass/Fail)
+                </h3>
+
+                <div class="space-y-4 my-6">
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-emerald-700">ĐẠT CHUẨN (Pass)</span>
+                            <span class="text-emerald-700" id="phan-tram-dat">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                            <div id="thanh-dat" class="bg-emerald-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-rose-700">CHƯA ĐẠT (Fail)</span>
+                            <span class="text-rose-700" id="phan-tram-truot">0%</span>
+                        </div>
+                        <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                            <div id="thanh-truot" class="bg-rose-500 h-3 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100 text-xs text-slate-500 space-y-2">
+                    <div class="flex justify-between">
+                        <span>Điểm thi trung bình toàn hệ thống:</span>
+                        <strong class="text-slate-800" id="diem-trung-binh-he-thong">0.0 đ</strong>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Tổng số lượt nộp bài đánh giá:</span>
+                        <strong class="text-slate-800" id="tong-luot-nop-bai">0 lượt</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Các bài thi vừa nộp gần nhất (Chiếm 2/3) -->
+            <div class="lg:col-span-2 the-card-fpt p-6 bg-white border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center">
+                        <span class="w-2.5 h-5 bg-[#002C6C] rounded-sm mr-2"></span>
+                        Hoạt động kiểm tra mới nhất
+                    </h3>
+                    <a href="/giao-dien/quan-tri/thong-ke-ket-qua.html" class="text-xs font-semibold text-[#002C6C] hover:underline">
+                        Xem bảng điểm chi tiết &rarr;
+                    </a>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-50 text-slate-500 font-semibold uppercase text-[10px]">
+                            <tr>
+                                <th class="py-2.5 px-3">Thực tập sinh</th>
+                                <th class="py-2.5 px-3">Đề thi</th>
+                                <th class="py-2.5 px-3 text-center">Điểm</th>
+                                <th class="py-2.5 px-3 text-center">Kết quả</th>
+                                <th class="py-2.5 px-3 text-right">Thời gian nộp</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bang-thi-gan-day" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="5" class="py-8 text-center text-slate-400">Đang tải dữ liệu...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('nguoi_huong_dan')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            await taiThongKeMentor();
+        });
+
+        async function taiThongKeMentor() {
+            const ketQua = await goiApi('/api/thong-ke/tong-quan-mentor');
+            if (!ketQua.thanhCong) return;
+
+            const dl = ketQua.duLieu;
+            document.getElementById('thong-ke-tong-tts').textContent = dl.tongThucTapSinh;
+            document.getElementById('thong-ke-tong-kh').textContent = dl.tongKhoaHoc;
+            document.getElementById('thong-ke-tong-dt').textContent = dl.tongDeThi;
+            document.getElementById('thong-ke-ty-le-dat').textContent = `${dl.tyLeDatPhanTram}%`;
+            document.getElementById('thong-ke-luot-dat-truot').textContent = `${dl.soLuotDat} lượt đạt / ${dl.tongLuotThi} lượt thi`;
+
+            // Cập nhật biểu đồ thanh tỷ lệ
+            const tyLeTruot = dl.tongLuotThi > 0 ? (100 - dl.tyLeDatPhanTram) : 0;
+            document.getElementById('phan-tram-dat').textContent = `${dl.tyLeDatPhanTram}% (${dl.soLuotDat})`;
+            document.getElementById('thanh-dat').style.width = `${dl.tyLeDatPhanTram}%`;
+            document.getElementById('phan-tram-truot').textContent = `${tyLeTruot}% (${dl.soLuotTruot})`;
+            document.getElementById('thanh-truot').style.width = `${tyLeTruot}%`;
+
+            document.getElementById('diem-trung-binh-he-thong').textContent = `${dl.diemTrungBinh} đ`;
+            document.getElementById('tong-luot-nop-bai').textContent = `${dl.tongLuotThi} lượt`;
+
+            // Bảng các lượt thi gần đây
+            const tbody = document.getElementById('bang-thi-gan-day');
+            if (dl.danhSachThiGanDay.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400">Chưa có bài thi nào được nộp.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = dl.danhSachThiGanDay.map(b => {
+                const laDat = b.ket_qua === 'dat';
+                const huyHieu = laDat 
+                    ? `<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold text-[10px] rounded-full">ĐẠT</span>`
+                    : `<span class="px-2 py-0.5 bg-rose-100 text-rose-800 font-bold text-[10px] rounded-full">CHƯA ĐẠT</span>`;
+
+                return `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="py-3 px-3">
+                            <strong class="font-bold text-slate-900 block">${b.ho_ten}</strong>
+                            <span class="text-[10px] text-slate-400">${b.ma_nguoi_dung} • ${b.nhom_thuc_tap || 'K18'}</span>
+                        </td>
+                        <td class="py-3 px-3 text-slate-700 font-medium">${b.tieu_de_de_thi}</td>
+                        <td class="py-3 px-3 text-center font-bold ${laDat ? 'text-emerald-600' : 'text-rose-600'}">
+                            ${b.tong_diem_dat_duoc} đ
+                        </td>
+                        <td class="py-3 px-3 text-center">${huyHieu}</td>
+                        <td class="py-3 px-3 text-right text-slate-400">${dinhDangNgayGio(b.thoi_gian_nop_bai)}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+    </script>
+</body>
+</html>

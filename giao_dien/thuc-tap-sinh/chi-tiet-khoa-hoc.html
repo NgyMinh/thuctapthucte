@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học tập Khóa học - FPT Software E-Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/giao-dien/chung/fpt-style.css">
+</head>
+<body class="bg-[#F8FAFC] text-slate-800">
+
+    <!-- Header Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="/giao-dien/thuc-tap-sinh/khoa-hoc.html" class="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition" title="Quay lại danh sách">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+                <div class="border-l border-slate-200 pl-4">
+                    <span class="text-xs font-bold text-[#F37021] uppercase" id="khoa-hoc-ma">FPT-JV01</span>
+                    <h1 class="text-sm font-bold text-slate-900 line-clamp-1 max-w-md" id="khoa-hoc-tieu-de">Đang tải tên khóa học...</h1>
+                </div>
+            </div>
+
+            <!-- Tiến độ chung -->
+            <div class="flex items-center space-x-6">
+                <div class="hidden sm:flex items-center space-x-3">
+                    <div class="text-right">
+                        <div class="text-xs text-slate-500">Tiến độ khóa học</div>
+                        <div class="text-xs font-bold text-emerald-600" id="tien-do-chu-phanthram">0% Hoàn thành</div>
+                    </div>
+                    <div class="w-24 bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                        <div id="tien-do-thanh" class="bg-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <a href="/giao-dien/thuc-tap-sinh/ho-so.html" class="w-9 h-9 rounded-full bg-[#002C6C] text-white flex items-center justify-center font-bold text-sm" id="avatar-chu-cai">A</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bố cục học tập: Trình xem bài giảng & Mục lục chương bài -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Cột trái: Trình xem nội dung bài học (Kích thước lớn, dễ theo dõi) -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Khung phát Video hoặc Tài liệu nhúng -->
+                <div class="the-card-fpt overflow-hidden bg-black rounded-2xl shadow-lg border border-slate-800">
+                    <div id="trinh-chieu-container" class="aspect-video w-full bg-slate-950 flex items-center justify-center">
+                        <div class="text-center text-slate-400 p-8">
+                            <svg class="w-12 h-12 mx-auto mb-2 text-slate-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <p class="text-sm">Đang tải nội dung bài học...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thanh thông tin chi tiết bài học & Nút đánh dấu hoàn thành -->
+                <div class="the-card-fpt p-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-slate-100">
+                        <div>
+                            <span class="inline-block text-[11px] font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded" id="bai-hoc-loai">VIDEO BÀI GIẢNG</span>
+                            <h2 class="text-xl font-bold text-slate-900 mt-2" id="bai-hoc-tieu-de">Tiêu đề bài học</h2>
+                            <p class="text-xs text-slate-500 mt-1">Thời lượng ước tính: <span id="bai-hoc-thoi-luong">30</span> phút</p>
+                        </div>
+
+                        <!-- Nút hoàn thành bài học -->
+                        <div>
+                            <button id="nut-danh-dau-hoan-thanh" onclick="xuLyDanhDauHoanThanh()"
+                                class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-sm transition flex items-center space-x-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                <span id="chu-nut-hoan-thanh">Đánh dấu đã hoàn thành</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Nội dung bài giảng dạng văn bản / Ghi chú -->
+                    <div class="mt-5">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tóm tắt & Hướng dẫn học tập:</h4>
+                        <div class="text-sm text-slate-700 leading-relaxed space-y-3" id="bai-hoc-noi-dung-chu">
+                            Chưa có nội dung ghi chú cho bài học này.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Danh mục chương và danh sách bài học -->
+            <div class="space-y-4">
+                <div class="the-card-fpt p-5">
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Nội dung khóa học</h3>
+                    <p class="text-xs text-slate-500 mb-4" id="thong-ke-bai-chuong">0 chương • 0 bài học</p>
+
+                    <!-- Danh sách chương & bài -->
+                    <div id="danh-sach-chuong-container" class="space-y-4 max-h-[600px] overflow-y-auto pr-1">
+                        <!-- Nạp động bằng JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="/giao-dien/chung/ungDung.js"></script>
+    <script>
+        const thamSoUrl = new URLSearchParams(window.location.search);
+        const idKhoaHoc = thamSoUrl.get('id');
+
+        let duLieuKhoaHocHienTai = null;
+        let baiHocHienTai = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!kiemTraBaoVeTrang('thuc_tap_sinh')) return;
+            caiDatThongTinNguoiDungHeader();
+
+            const nguoiDung = layThongTinNguoiDung();
+            if (nguoiDung) {
+                document.getElementById('avatar-chu-cai').textContent = nguoiDung.hoTen.charAt(0).toUpperCase();
+            }
+
+            if (!idKhoaHoc) {
+                hienThiThongBao('Không tìm thấy thông tin khóa học!', 'loi');
+                setTimeout(() => window.location.href = '/giao-dien/thuc-tap-sinh/khoa-hoc.html', 1500);
+                return;
+            }
+
+            await taiChiTietKhoaHoc();
+        });
+
+        // Tải chi tiết khóa học, chương và các bài học
+        async function taiChiTietKhoaHoc() {
+            const ketQua = await goiApi(`/api/khoa-hoc/${idKhoaHoc}`);
+            if (!ketQua.thanhCong) {
+                hienThiThongBao(ketQua.thongBao || 'Lỗi khi tải thông tin khóa học!', 'loi');
+                return;
+            }
+
+            duLieuKhoaHocHienTai = ketQua.duLieu;
+
+            // Cập nhật thông tin Header
+            document.getElementById('khoa-hoc-ma').textContent = duLieuKhoaHocHienTai.ma_khoa_hoc;
+            document.getElementById('khoa-hoc-tieu-de').textContent = duLieuKhoaHocHienTai.tieu_de;
+            capNhatThanhTienDo(duLieuKhoaHocHienTai.phanTramHoanThanh);
+
+            document.getElementById('thong-ke-bai-chuong').textContent = 
+                `${duLieuKhoaHocHienTai.danhSachChuong.length} chương • ${duLieuKhoaHocHienTai.tongSoBai} bài học`;
+
+            // Render danh sách chương và bài học
+            const khungChuong = document.getElementById('danh-sach-chuong-container');
+            let danhSachTatCaBai = [];
+
+            khungChuong.innerHTML = duLieuKhoaHocHienTai.danhSachChuong.map(chuong => {
+                const htmlBaiHoc = chuong.danhSachBaiHoc.map(bh => {
+                    danhSachTatCaBai.push(bh);
+                    const daHoanThanh = bh.da_hoan_thanh == 1;
+
+                    let iconLoai = '🎥';
+                    if (bh.loai_bai_hoc === 'tai_lieu_pdf') iconLoai = '📄';
+                    if (bh.loai_bai_hoc === 'slide') iconLoai = '📊';
+
+                    return `
+                        <button onclick="chuyenBaiHoc(${bh.id})" id="item-bai-${bh.id}"
+                            class="w-full text-left p-3 rounded-xl hover:bg-slate-50 transition border border-transparent flex items-center justify-between text-xs space-x-2">
+                            <div class="flex items-center space-x-2.5 min-w-0">
+                                <span>${iconLoai}</span>
+                                <span class="font-medium text-slate-800 truncate">${bh.tieu_de_bai_hoc}</span>
+                            </div>
+                            <div class="flex-shrink-0">
+                                ${daHoanThanh 
+                                    ? `<span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-[10px]">✓</span>`
+                                    : `<span class="w-5 h-5 rounded-full border border-slate-300"></span>`
+                                }
+                            </div>
+                        </button>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                        <div class="bg-slate-50 px-4 py-2.5 font-bold text-xs text-slate-700 border-b border-slate-200">
+                            ${chuong.tieu_de_chuong}
+                        </div>
+                        <div class="p-2 space-y-1">
+                            ${htmlBaiHoc.length > 0 ? htmlBaiHoc : '<div class="text-[11px] text-slate-400 p-2">Chưa có bài học</div>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Mặc định chọn bài học đầu tiên
+            if (danhSachTatCaBai.length > 0) {
+                chuyenBaiHoc(danhSachTatCaBai[0].id);
+            }
+        }
+
+        // Chuyển đổi bài học đang xem
+        function chuyenBaiHoc(idBaiHoc) {
+            let timThay = null;
+            for (const chuong of duLieuKhoaHocHienTai.danhSachChuong) {
+                const b = chuong.danhSachBaiHoc.find(x => x.id === idBaiHoc);
+                if (b) {
+                    timThay = b;
+                    break;
+                }
+            }
+
+            if (!timThay) return;
+            baiHocHienTai = timThay;
+
+            // Highlight mục đang chọn
+            document.querySelectorAll('[id^="item-bai-"]').forEach(el => {
+                el.classList.remove('bg-orange-50', 'border-[#F37021]', 'text-[#F37021]');
+            });
+            const phanTuHienTai = document.getElementById(`item-bai-${idBaiHoc}`);
+            if (phanTuHienTai) {
+                phanTuHienTai.classList.add('bg-orange-50', 'border-[#F37021]');
+            }
+
+            // Cập nhật thông tin chi tiết bài học
+            document.getElementById('bai-hoc-tieu-de').textContent = baiHocHienTai.tieu_de_bai_hoc;
+            document.getElementById('bai-hoc-thoi-luong').textContent = baiHocHienTai.thoi_luong_phut;
+            document.getElementById('bai-hoc-noi-dung-chu').textContent = baiHocHienTai.noi_dung_van_ban || 'Không có ghi chú thêm.';
+
+            let nhanLoai = 'VIDEO BÀI GIẢNG';
+            if (baiHocHienTai.loai_bai_hoc === 'tai_lieu_pdf') nhanLoai = 'TÀI LIỆU PDF';
+            if (baiHocHienTai.loai_bai_hoc === 'slide') nhanLoai = 'BÀI THUYẾT TRÌNH SLIDE';
+            document.getElementById('bai-hoc-loai').textContent = nhanLoai;
+
+            // Cập nhật nút hoàn thành
+            capNhatGiaoDienNutHoanThanh(baiHocHienTai.da_hoan_thanh == 1);
+
+            // Cập nhật khung phát video/PDF/Slide
+            renderTrinhChieu(baiHocHienTai);
+        }
+
+        // Render trình xem video YouTube hoặc file PDF/Slide
+        function renderTrinhChieu(baiHoc) {
+            const khungContainer = document.getElementById('trinh-chieu-container');
+
+            if (baiHoc.loai_bai_hoc === 'video') {
+                let linkSrc = baiHoc.duong_dan_noi_dung || 'https://www.youtube.com/embed/eIrMbAQSU34';
+                if (!linkSrc.includes('embed') && linkSrc.includes('youtube.com/watch?v=')) {
+                    linkSrc = linkSrc.replace('watch?v=', 'embed/');
+                }
+                khungContainer.innerHTML = `
+                    <iframe class="w-full h-full rounded-2xl" src="${linkSrc}" 
+                            title="${baiHoc.tieu_de_bai_hoc}" frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                `;
+            } else if (baiHoc.loai_bai_hoc === 'tai_lieu_pdf') {
+                khungContainer.innerHTML = `
+                    <div class="w-full h-full bg-slate-900 flex flex-col items-center justify-center text-white p-6 rounded-2xl">
+                        <svg class="w-16 h-16 text-rose-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        <h4 class="text-base font-bold text-center mb-2">${baiHoc.tieu_de_bai_hoc}</h4>
+                        <p class="text-xs text-slate-300 mb-4 text-center max-w-md">Tài liệu học tập định dạng PDF. Bạn có thể mở đọc trực tiếp hoặc tải về máy tính.</p>
+                        <a href="${baiHoc.duong_dan_noi_dung || '#'}" target="_blank" 
+                           class="px-5 py-2.5 bg-[#F37021] hover:bg-[#E05D10] text-white text-xs font-bold rounded-xl transition inline-flex items-center space-x-2">
+                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                           <span>Mở tài liệu PDF trong tab mới</span>
+                        </a>
+                    </div>
+                `;
+            } else {
+                khungContainer.innerHTML = `
+                    <div class="w-full h-full bg-slate-900 flex flex-col items-center justify-center text-white p-6 rounded-2xl">
+                        <svg class="w-16 h-16 text-amber-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+                        <h4 class="text-base font-bold text-center mb-2">${baiHoc.tieu_de_bai_hoc}</h4>
+                        <p class="text-xs text-slate-300 mb-4 text-center max-w-md">Bài thuyết trình Slide đào tạo nội bộ FPT Software.</p>
+                        <a href="${baiHoc.duong_dan_noi_dung || '#'}" target="_blank" 
+                           class="px-5 py-2.5 bg-[#002C6C] hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition inline-flex items-center space-x-2">
+                           <span>Xem Slide bài giảng</span>
+                        </a>
+                    </div>
+                `;
+            }
+        }
+
+        function capNhatGiaoDienNutHoanThanh(daXong) {
+            const nut = document.getElementById('nut-danh-dau-hoan-thanh');
+            const chu = document.getElementById('chu-nut-hoan-thanh');
+
+            if (daXong) {
+                nut.className = 'px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl shadow-sm transition flex items-center space-x-2';
+                nut.innerHTML = `
+                    <svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span>Đã hoàn thành (Bấm để hủy)</span>
+                `;
+            } else {
+                nut.className = 'px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl shadow-sm transition flex items-center space-x-2';
+                nut.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span>Đánh dấu đã hoàn thành</span>
+                `;
+            }
+        }
+
+        // Xử lý khi nhấn nút đánh dấu hoàn thành
+        async function xuLyDanhDauHoanThanh() {
+            if (!baiHocHienTai) return;
+            const trangThaiHienTai = baiHocHienTai.da_hoan_thanh == 1;
+            const trangThaiMoi = !trangThaiHienTai;
+
+            const ketQua = await goiApi('/api/khoa-hoc/cap-nhat-tien-do', 'POST', {
+                idBaiHoc: baiHocHienTai.id,
+                idKhoaHoc: idKhoaHoc,
+                daHoanThanh: trangThaiMoi
+            });
+
+            if (ketQua.thanhCong) {
+                baiHocHienTai.da_hoan_thanh = trangThaiMoi ? 1 : 0;
+                capNhatGiaoDienNutHoanThanh(trangThaiMoi);
+                hienThiThongBao(ketQua.thongBao, 'thanh_cong');
+                // Tải lại để cập nhật % tiến độ
+                await taiChiTietKhoaHoc();
+            }
+        }
+
+        function capNhatThanhTienDo(phanTram) {
+            document.getElementById('tien-do-chu-phanthram').textContent = `${phanTram}% Hoàn thành`;
+            document.getElementById('tien-do-thanh').style.width = `${phanTram}%`;
+        }
+    </script>
+</body>
+</html>
